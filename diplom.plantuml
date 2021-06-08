@@ -1,0 +1,340 @@
+@startuml
+
+namespace art_orders {
+    class Application {
+        {static} + main()
+    }
+
+
+
+/'**************************************************************
+***************************CONFIG*******************************
+***************************************************************'/
+
+
+    namespace config {
+      class MvcConfig {
+          - uploadPath : String
+          + addResourceHandlers()
+          + addViewControllers()
+      }
+
+      class WebSecurityConfig {
+          - passwordEncoder : PasswordEncoder
+          + getPasswordEncoder()
+          # configure()
+          # configure()
+      }
+    }
+
+
+
+ /'**************************************************************
+ ************************CONTROLLER******************************
+ ****************************************************************'/
+
+    namespace controller {
+      class ControllerUtil {
+          {static} ~ getErrors()
+      }
+
+      class MainController {
+          + main()
+      }
+
+      class OrderApplicationController {
+          - uploadPath : String
+          + Update()
+          + apply()
+          + changeOrderStatus()
+          + editApplication()
+          + getApplication()
+          + getArtistOrders()
+          + getCustomerOrders()
+          + newArtistApplication()
+          + newArtistApplicationForm()
+          + newCustomerApplication()
+          + newCustomerApplicationForm()
+          - saveFile()
+      }
+
+      class RegistrationController {
+          + addUser()
+          + registration()
+      }
+
+      class SearchController {
+          + search()
+      }
+
+      class SettingsController {
+          - passwordEncoder : PasswordEncoder
+          - uploadPath : String
+          + addSite()
+          + changeAvatar()
+          + changeStatus()
+          + deleteSite()
+          + getSettings()
+          + setSettings()
+          - saveFile()
+      }
+
+      class UserController {
+          + getSettings()
+          + profile()
+          + subscribe()
+          + unsubscribe()
+          + updateSettings()
+          + userEditForm()
+          + getCustomerOrders()
+          + getOrders()
+          + getSubscriptions()
+      }
+    }
+
+ /'**************************************************************
+ ****************************DOMAIN******************************
+ ****************************************************************'/
+
+namespace domain {
+
+      class Order {
+          - artistRating : int
+          - customerRating : int
+          - id : Long
+          - image : String
+          + Order()
+          + Order()
+          + Order()
+          + getArtist()
+          + getArtistRating()
+          + getCustomer()
+          + getCustomerRating()
+          + getId()
+          + getImage()
+          + getOrderApplication()
+          + getStatus()
+          + setArtist()
+          + setArtistRating()
+          + setCustomer()
+          + setCustomerRating()
+          + setId()
+          + setImage()
+          + setOrderApplication()
+          + setStatus()
+      }
+
+      class OrderApplication {
+          - artistSearch : boolean
+          - cost : int
+          - description : String
+          - id : Long
+          - name : String
+          - open : boolean
+          + OrderApplication()
+          + OrderApplication()
+          + OrderApplication()
+          + getCost()
+          + getCreator()
+          + getDescription()
+          + getId()
+          + getName()
+          + getType()
+          + isArtistSearch()
+          + isOpen()
+          + setArtistSearch()
+          + setCost()
+          + setCreator()
+          + setDescription()
+          + setId()
+          + setName()
+          + setOpen()
+          + setType()
+      }
+
+
+      class Rating {
+          - artistRate : int
+          - customerRate : int
+          - id : Long
+          + getArtistRate()
+          + getCustomerRate()
+          + getId()
+          + getOrder()
+          + setArtistRate()
+          + setCustomerRate()
+          + setId()
+          + setOrder()
+      }
+
+       class Site {
+          - id : Long
+          - siteAddress : String
+          - siteName : String
+          + Site()
+          + Site()
+          + getId()
+          + getOwner()
+          + getSiteAddress()
+          + getSiteName()
+          + setId()
+          + setOwner()
+          + setSiteAddress()
+          + setSiteName()
+      }
+
+
+      enum Status {
+        COMPLETED
+        CONFIRMED
+        PROCESS
+        name
+      }
+
+
+      enum Type {
+        ANIMATION
+        DIGITAL
+        OTHER
+        THREEDIMENSIONAL
+        TRADITIONAL
+        name
+      }
+
+
+      class User {
+          - avatar : String
+          - id : Long
+          - isArtist : boolean
+          - password : String
+          - sites : Set<Site>
+          - subscribers : Set<User>
+          - subscriptions : Set<User>
+          - userInfo : String
+          - username : String
+          + equals()
+          + getAuthorities()
+          + getAvatar()
+          + getId()
+          + getPassword()
+          + getSites()
+          + getSubscribers()
+          + getSubscriptions()
+          + getUserInfo()
+          + getUsername()
+          + hashCode()
+          + isAccountNonExpired()
+          + isAccountNonLocked()
+          + isArtist()
+          + isCredentialsNonExpired()
+          + isEnabled()
+          + setArtist()
+          + setAvatar()
+          + setId()
+          + setMessages()
+          + setPassword()
+          + setSites()
+          + setSubscribers()
+          + setSubscriptions()
+          + setUserInfo()
+          + setUsername()
+      }
+}
+
+ /'**************************************************************
+ ****************************REPOS******************************
+ ****************************************************************'/
+
+namespace repos {
+      interface MessageRepo {
+          {abstract} + findAll()
+          {abstract} + findByTag()
+      }
+
+      interface OrderApplicationRepo {
+          {abstract} + findByArtistSearchAndCreator()
+          {abstract} + findByOpenAndArtistSearch()
+          {abstract} + findByOpenAndCostLessThanEqualAndArtistSearch()
+          {abstract} + findByOpenAndTypeAndArtistSearch()
+          {abstract} + findByOpenAndTypeAndCostLessThanEqualAndArtistSearch()
+          {abstract} + findByType()
+      }
+
+      interface OrderRepo {
+          {abstract} + findByArtistAndStatus()
+          {abstract} + findByCustomerAndStatus()
+          {abstract} + findByStatus()
+          {abstract} + findTop3ByArtistAndStatusOrderByIdDesc()
+          {abstract} + findTop3ByCustomerAndStatusOrderByIdDesc()
+      }
+
+
+      interface SiteRepo {
+      }
+
+      interface UserRepo {
+          {abstract} + findByUsername()
+      }
+}
+
+
+ /'**************************************************************
+ ****************************SERVICE******************************
+ ****************************************************************'/
+
+namespace service {
+      class UserService {
+          - passwordEncoder : PasswordEncoder
+          + addUser()
+          + findAll()
+          + findByUsername()
+          + loadUserByUsername()
+          + saveUser()
+          + subscribe()
+          + unsubscribe()
+          + updateSettings()
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+  art_orders.controller.MainController o-- art_orders.repos.OrderRepo
+  art_orders.controller.OrderApplicationController o-- art_orders.repos.OrderApplicationRepo
+  art_orders.controller.OrderApplicationController o-- art_orders.repos.OrderRepo
+  art_orders.controller.OrderApplicationController o-- art_orders.repos.UserRepo
+  art_orders.controller.RegistrationController o-- art_orders.service.UserService
+  art_orders.controller.SearchController o-- art_orders.repos.OrderApplicationRepo
+  art_orders.controller.SettingsController o-- art_orders.repos.SiteRepo
+  art_orders.controller.SettingsController o-- art_orders.repos.UserRepo
+  art_orders.controller.UserController o-- art_orders.repos.OrderRepo
+
+
+  art_orders.domain.Message o-- art_orders.domain.User
+  art_orders.domain.Order o-- art_orders.domain.User
+  art_orders.domain.Order o-- art_orders.domain.User
+  art_orders.domain.Order o-- art_orders.domain.OrderApplication
+  art_orders.domain.Order o-- art_orders.domain.Status
+  art_orders.domain.OrderApplication o-- art_orders.domain.User
+  art_orders.domain.OrderApplication o-- art_orders.domain.Type
+  art_orders.domain.Rating o-- art_orders.domain.Order
+  art_orders.domain.Site o-- art_orders.domain.User
+
+
+ art_orders.controller.UserController o-- art_orders.service.UserService
+   art_orders.config.WebSecurityConfig o-- art_orders.service.UserService
+
+ art_orders.service.UserService .up.|> org.springframework.security.core.userdetails.UserDetailsService
+  art_orders.service.UserService o-- art_orders.repos.UserRepo
+
+
+
+ }
+@enduml

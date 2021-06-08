@@ -1,0 +1,186 @@
+@startuml
+
+namespace art_orders {
+    class Application {
+    }
+
+
+
+/'**************************************************************
+***************************CONFIG*******************************
+***************************************************************'/
+
+
+    namespace config {
+      class MvcConfig {
+      }
+
+      class WebSecurityConfig {
+      }
+    }
+
+
+
+ /'**************************************************************
+ ************************CONTROLLER******************************
+ ****************************************************************'/
+
+    namespace controller {
+      class ControllerUtil {
+
+      }
+
+      class MainController {
+      }
+
+      class OrderApplicationController {
+
+      }
+
+      class RegistrationController {
+
+      }
+
+      class SearchController {
+
+      }
+
+      class SettingsController {
+
+      }
+
+      class UserController {
+
+      }
+    }
+
+ /'**************************************************************
+ ****************************DOMAIN******************************
+ ****************************************************************'/
+
+namespace domain {
+
+      class Order {
+
+      }
+
+      class OrderApplication {
+
+         }
+
+
+      class Rating {
+
+      }
+
+       class Site {
+
+      }
+
+
+      enum Status {
+
+      }
+
+
+      enum Type {
+
+      }
+
+
+      class User {
+
+      }
+}
+
+ /'**************************************************************
+ ****************************REPOS******************************
+ ****************************************************************'/
+
+namespace repos {
+      interface MessageRepo {
+
+      }
+
+      interface OrderApplicationRepo {
+
+      }
+
+      interface OrderRepo {
+
+      }
+
+
+      interface SiteRepo {
+      }
+
+      interface UserRepo {
+
+      }
+}
+
+
+ /'**************************************************************
+ ****************************SERVICE******************************
+ ****************************************************************'/
+
+namespace service {
+      class UserService {
+
+      }
+    }
+
+namespace resources {
+        namespace static {}
+        namespace templates {}
+
+    }
+
+
+
+
+
+
+
+
+
+
+  art_orders.controller.MainController o-- art_orders.repos.OrderRepo
+  art_orders.controller.OrderApplicationController o-- art_orders.repos.OrderApplicationRepo
+  art_orders.controller.OrderApplicationController o-- art_orders.repos.OrderRepo
+  art_orders.controller.OrderApplicationController o-- art_orders.repos.UserRepo
+  art_orders.controller.RegistrationController o-- art_orders.service.UserService
+  art_orders.controller.SearchController o-- art_orders.repos.OrderApplicationRepo
+  art_orders.controller.SettingsController o-- art_orders.repos.SiteRepo
+  art_orders.controller.SettingsController o-- art_orders.repos.UserRepo
+  art_orders.controller.UserController o-- art_orders.repos.OrderRepo
+
+
+  art_orders.domain.Order o-- art_orders.domain.User
+  art_orders.domain.Order o-- art_orders.domain.User
+  art_orders.domain.Order o-- art_orders.domain.OrderApplication
+  art_orders.domain.Order o-- art_orders.domain.Status
+  art_orders.domain.OrderApplication o-- art_orders.domain.User
+  art_orders.domain.OrderApplication o-- art_orders.domain.Type
+  art_orders.domain.Rating o-- art_orders.domain.Order
+  art_orders.domain.Site o-- art_orders.domain.User
+
+  art_orders.controller.UserController o-- art_orders.service.UserService
+  art_orders.config.WebSecurityConfig o-- art_orders.service.UserService
+
+  art_orders.service.UserService o-- art_orders.repos.UserRepo
+
+  art_orders.domain.OrderApplication o-- art_orders.repos.OrderApplicationRepo
+  art_orders.domain.Order  o-- art_orders.repos.OrderRepo
+  art_orders.domain.User o-- art_orders.repos.UserRepo
+  art_orders.domain.OrderApplication  o-- art_orders.repos.OrderApplicationRepo
+  art_orders.domain.Site  o-- art_orders.repos.SiteRepo
+
+  art_orders.controller.RegistrationController o-- art_orders.controller.ControllerUtil
+
+  art_orders.controller.UserController -- art_orders.resources
+
+
+
+ }
+@enduml

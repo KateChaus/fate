@@ -1,0 +1,224 @@
+@startuml
+
+title __DOMAIN's Class Diagram__\n
+
+  namespace com.kate_chaus.art_orders {
+    namespace domain {
+      class com.kate_chaus.art_orders.domain.Message {
+          - filename : String
+          - id : Long
+          - tag : String
+          - text : String
+          + Message()
+          + Message()
+          + getAuthor()
+          + getAuthorName()
+          + getFilename()
+          + getId()
+          + getTag()
+          + getText()
+          + setAuthor()
+          + setFilename()
+          + setId()
+          + setTag()
+          + setText()
+      }
+    }
+  }
+  
+
+  namespace com.kate_chaus.art_orders {
+    namespace domain {
+      class com.kate_chaus.art_orders.domain.Order {
+          - artistRating : int
+          - customerRating : int
+          - id : Long
+          - image : String
+          + Order()
+          + Order()
+          + Order()
+          + getArtist()
+          + getArtistRating()
+          + getCustomer()
+          + getCustomerRating()
+          + getId()
+          + getImage()
+          + getOrderApplication()
+          + getStatus()
+          + setArtist()
+          + setArtistRating()
+          + setCustomer()
+          + setCustomerRating()
+          + setId()
+          + setImage()
+          + setOrderApplication()
+          + setStatus()
+      }
+    }
+  }
+  
+
+  namespace com.kate_chaus.art_orders {
+    namespace domain {
+      class com.kate_chaus.art_orders.domain.OrderApplication {
+          - artistSearch : boolean
+          - cost : int
+          - description : String
+          - id : Long
+          - name : String
+          - open : boolean
+          + OrderApplication()
+          + OrderApplication()
+          + OrderApplication()
+          + getCost()
+          + getCreator()
+          + getDescription()
+          + getId()
+          + getName()
+          + getType()
+          + isArtistSearch()
+          + isOpen()
+          + setArtistSearch()
+          + setCost()
+          + setCreator()
+          + setDescription()
+          + setId()
+          + setName()
+          + setOpen()
+          + setType()
+      }
+    }
+  }
+  
+
+  namespace com.kate_chaus.art_orders {
+    namespace domain {
+      class com.kate_chaus.art_orders.domain.Rating {
+          - artistRate : int
+          - customerRate : int
+          - id : Long
+          + getArtistRate()
+          + getCustomerRate()
+          + getId()
+          + getOrder()
+          + setArtistRate()
+          + setCustomerRate()
+          + setId()
+          + setOrder()
+      }
+    }
+  }
+  
+
+  namespace com.kate_chaus.art_orders {
+    namespace domain {
+      class com.kate_chaus.art_orders.domain.Site {
+          - id : Long
+          - siteAddress : String
+          - siteName : String
+          + Site()
+          + Site()
+          + getId()
+          + getOwner()
+          + getSiteAddress()
+          + getSiteName()
+          + setId()
+          + setOwner()
+          + setSiteAddress()
+          + setSiteName()
+      }
+    }
+  }
+  
+
+  namespace com.kate_chaus.art_orders {
+    namespace domain {
+      enum Status {
+        COMPLETED
+        CONFIRMED
+        PROCESS
+        name
+      }
+    }
+  }
+  
+
+  namespace com.kate_chaus.art_orders {
+    namespace domain {
+      enum Type {
+        ANIMATION
+        DIGITAL
+        OTHER
+        THREEDIMENSIONAL
+        TRADITIONAL
+        name
+      }
+    }
+  }
+  
+
+  namespace com.kate_chaus.art_orders {
+    namespace domain {
+      class com.kate_chaus.art_orders.domain.User {
+          - avatar : String
+          - id : Long
+          - isArtist : boolean
+          - messages : Set<Message>
+          - password : String
+          - sites : Set<Site>
+          - subscribers : Set<User>
+          - subscriptions : Set<User>
+          - userInfo : String
+          - username : String
+          + equals()
+          + getAuthorities()
+          + getAvatar()
+          + getId()
+          + getMessages()
+          + getPassword()
+          + getSites()
+          + getSubscribers()
+          + getSubscriptions()
+          + getUserInfo()
+          + getUsername()
+          + hashCode()
+          + isAccountNonExpired()
+          + isAccountNonLocked()
+          + isArtist()
+          + isCredentialsNonExpired()
+          + isEnabled()
+          + setArtist()
+          + setAvatar()
+          + setId()
+          + setMessages()
+          + setPassword()
+          + setSites()
+          + setSubscribers()
+          + setSubscriptions()
+          + setUserInfo()
+          + setUsername()
+      }
+    }
+  }
+  
+
+  com.kate_chaus.art_orders.domain.Message o-- com.kate_chaus.art_orders.domain.User : author
+  com.kate_chaus.art_orders.domain.Order o-- com.kate_chaus.art_orders.domain.User : artist
+  com.kate_chaus.art_orders.domain.Order o-- com.kate_chaus.art_orders.domain.User : customer
+  com.kate_chaus.art_orders.domain.Order o-- com.kate_chaus.art_orders.domain.OrderApplication : orderApplication
+  com.kate_chaus.art_orders.domain.Order o-- com.kate_chaus.art_orders.domain.Status : status
+  com.kate_chaus.art_orders.domain.OrderApplication o-- com.kate_chaus.art_orders.domain.User : creator
+  com.kate_chaus.art_orders.domain.OrderApplication o-- com.kate_chaus.art_orders.domain.Type : type
+  com.kate_chaus.art_orders.domain.Rating o-- com.kate_chaus.art_orders.domain.Order : order
+  com.kate_chaus.art_orders.domain.Site o-- com.kate_chaus.art_orders.domain.User : owner
+  com.kate_chaus.art_orders.domain.User .up.|> org.springframework.security.core.userdetails.UserDetails
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml
